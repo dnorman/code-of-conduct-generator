@@ -3,9 +3,31 @@ const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
 module.exports = function(defaults) {
   var app = new EmberApp(defaults, {
+    emberCliConcat: {      
+      enabled: true,
+      outputDir: 'assets',
+      outputFileName: 'app',
+      useSelfClosingTags: false,
+      wrapScriptsInFunction: false,
+      treeTypes: ['all'],
 
-    
-  });
+      js: {
+        concat: true,
+        contentFor: 'concat-js',
+        footer: null,
+        header: null,
+        preserveOriginal: false
+      },
+
+      css: {
+        concat: true,
+        contentFor: 'concat-css',
+        footer: null,
+        header: null,
+        preserveOriginal: false
+      }
+    }
+});
 
   // Use `app.import` to add additional libraries to the generated
   // output files.
