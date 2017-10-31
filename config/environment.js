@@ -4,7 +4,7 @@ module.exports = function(environment) {
   var ENV = {
     modulePrefix: 'code-of-conduct-generator',
     environment: environment,
-    rootURL: '/code-of-conduct-generator/',
+    rootURL: '/',
     locationType: 'auto',
     EmberENV: {
       FEATURES: {
@@ -43,7 +43,9 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-
+      ENV.baseURL = '/code-of-conduct-generator';
+      ENV.locationType = 'hash';
+      ENV.outputPath = 'docs/'
   }
 
   return ENV;
