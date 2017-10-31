@@ -4,7 +4,7 @@ module.exports = function(environment) {
   var ENV = {
     modulePrefix: 'code-of-conduct-generator',
     environment: environment,
-    rootURL: '/',
+    rootURL: '/code-of-conduct-generator/',
     locationType: 'auto',
     EmberENV: {
       FEATURES: {

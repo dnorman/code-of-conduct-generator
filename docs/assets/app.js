@@ -94151,6 +94151,6 @@ catch(err) {
 });
 
 if (!runningTests) {
-  require("code-of-conduct-generator/app")["default"].create({"name":"code-of-conduct-generator","version":"0.0.0+1b175e51"});
+  require("code-of-conduct-generator/app")["default"].create({"name":"code-of-conduct-generator","version":"0.0.0+1e346a5c"});
 }
 //# sourceMappingURL=app.map
