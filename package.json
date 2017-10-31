@@ -44,6 +44,7 @@
   },
   "private": true,
   "dependencies": {
+    "ember-cli-concat": "^1.2.2",
     "ember-radio-buttons": "^4.1.0"
   }
 }

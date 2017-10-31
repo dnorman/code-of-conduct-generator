@@ -1,3 +1,30 @@
+<style>
+    .rendered-coc{
+         border: 1px solid black;
+         width:90%;
+         min-height: 50px;
+         padding: 25px;
+         color: #FFF;
+         background: #555;
+         display: inline-block;
+    }
+    .row{
+         display: flex;
+         max-height: 100%;
+         overflow-y: scroll;
+    }
+    .row input[type=text] {
+        width: 230px;
+    }
+    @media (max-width: 600px) {
+        .row {
+            display: block;
+        }
+    }
+</style>
+
+<div class="row">
+<div class="column" style="display:inline-block; width:300px; min-width:250px">
 Enter your Org Name:<br>
 {{input type="text" value=orgName}}<br><br>
 
@@ -6,101 +33,210 @@ Organization Type:<br>
 {{radio-button value='conference' checked=orgType}} Conference or in person forum<br>
 {{radio-button value='online'     checked=orgType}} Online Forum or Space<br>
 <br>
+Type of experience:<br>
+{{radio-button value='safe'              checked=experienceType}} Safe<br>
+{{radio-button value='harassment-free'   checked=experienceType}} Harassment-free<br>
+{{radio-button value='positive'          checked=experienceType}} Positive<br>
 
+<br>
+{{input type="checkbox" checked=mentionDignity}} Mention Dignity<br>
+{{input type="checkbox" checked=sexualImagery}} Mention Sexual Imagery<br>
+{{input type="checkbox" checked=correctiveAction}} Mention Corrective actions<br>
+<br>
+{{input type="checkbox" checked=mentionProtected}}Mention Protected Groups<br>
+<div style="background:#DDD; margin-left:8px">
+{{input type="checkbox" disabled=disableProtected checked=protectGender}}                    Gender<br>
+{{input type="checkbox" disabled=disableProtected checked=protectGenderIdentityExpression}}  Gender Identity or Expression<br>
+{{input type="checkbox" disabled=disableProtected checked=protectSexualOrientation}}         Sexual Orientation<br>
+{{input type="checkbox" disabled=disableProtected checked=protectDisability}}                Physical Disability<br>
+{{input type="checkbox" disabled=disableProtected checked=protectPhysicalAppearance}}        Physical Appearance<br>
+{{input type="checkbox" disabled=disableProtected checked=protectBodySize}}                  Body Size<br>
+{{input type="checkbox" disabled=disableProtected checked=protectAge}}                       Age<br>
+{{input type="checkbox" disabled=disableProtected checked=protectRace}}                      Race<br>
+{{input type="checkbox" disabled=disableProtected checked=protectReligion}}                  Religion<br>
+{{input type="checkbox" disabled=disableProtected checked=protectNeuro}}                     Neuro(a)typicality<br>
+{{input type="checkbox" disabled=disableProtected checked=protectPoliticalAffiliation}}      Political Affiliation<br>
+Other<br>
+{{input type="text" disabled=disableProtected value=protectOther}}                              
+</div>
+<br>
+<br>
 
-{{radio-button value='one'   checked=missionStatementOption}} A<br>
-{{radio-button value='two'   checked=missionStatementOption}} B<br>
-{{radio-button value='three' checked=missionStatementOption}} C<br>
+{{input type="checkbox" checked=emotionalIntelligence}} Encourage Emotional Intelligence<br>
+{{input type="checkbox" checked=prioritizeMarginalized}} Prioritize Marginalized<br>
+{{input type="checkbox" checked=reportingNoncompliance}} Reporting Noncompliance<br>
+Incident Response Team:<br>
+Name:  {{input type="text" value=responseTeamName}}<br><br>
+Email: {{input type="text" value=responseTeamEmail}}<br><br>
+<br>
+{{input type="checkbox" checked=shortVersion}} Include Synopsis<br>
 
-<h2>Your generated document:</h2><br>
-<div style="border: 1px solid black; width:90%; min-height: 50px; margin-left:auto; margin-right:auto; padding: 10px; color: #FFF; background: #999; display: inline-block">
+Public code of conduct policy URL:<br>
+{{input type="text" value=policyUrl}}<br><br>
+</div>
 
+<div class="column" style="display:inline-block;flex-grow:1">
 
+<h3>Summary, Suitable for footers on announcement emails, web pages, news stories, etc.</h3>
+<div class="rendered-coc">
+{{orgName}} is dedicated to providing a {{experienceType}} experience for everyone{{#if protectedGroups}}, regardless of {{protectedGroups}}{{/if}}.
+{{#if (eq experienceType "safety")}}
+    {{memberType.[1]}} must feel safe for the duration of their {{memberType.[4]}}.
+{{/if}}
+{{#if (eq experienceType "harassment-free")}}
+    We do not tolerate harassment of {{memberType.[3]}} in any form.
+{{/if}}
+{{#if (eq experienceType "positive")}}
+    {{memberType.[1]}} are responsible for maintaining the highest standard of ethics and conduct.
+{{/if}}
+
+{{#if mentionDignity}}{{memberType.[1]}} shall not dimininish the dignity or erase the identity of any person through language, rethorical device, or other means.{{/if}}
+
+{{#if (eq orgType "company")}}
+    {{#if sexualImagery}}Sexual language and imagery is not appropriate at {{orgName}}, including all company functions, meals, and after hours entertainment.{{/if}}
+    {{#if correctiveAction}}{{memberType.[1]}} violating these rules may be sanctioned or terminated without warning.{{/if}}
+{{/if}}
+{{#if (eq orgType "conference")}}
+    {{#if sexualImagery}}Sexual language and imagery is not appropriate for any conference venue, including talks.{{/if}}
+    {{#if correctiveAction}}{{memberType.[1]}} violating these rules may be sanctioned or removed at the sole discretion of the organizers.{{/if}}
+{{/if}}
 {{#if (eq orgType "online")}}
-<h2><span id="Anti-harassment_policy_text" class="mw-headline">Anti-harassment policy text</span></h2>
-<h3><span id="Shorter_version" class="mw-headline">Shorter version</span></h3>
-<p>{{orgName}} is dedicated to providing a harassment-free experience for everyone, regardless of gender, gender identity and expression, sexual orientation, disability, physical appearance, body size, age, race, or religion. We do not tolerate harassment of participants in any form.</p>
-<p>This code of conduct applies to all {{orgName}} spaces, including [list, eg "our mailing lists and IRC channel"], both online and off. Anyone who violates this code of conduct may be sanctioned or expelled from these spaces at the discretion of the RESPONSE TEAM.</p>
-<p>Some {{orgName}} spaces may have additional rules in place, which will be made clearly available to participants. Participants are responsible for knowing and abiding by these rules.</p>
-<h3><span id="Longer_version" class="mw-headline">Longer version</span></h3>
-<p>{{orgName}} is dedicated to providing a harassment-free experience for everyone. We do not tolerate harassment of participants in any form.</p>
-<p>This code of conduct applies to all {{orgName}} spaces, including [give a list of your spaces, eg "our mailing lists and IRC channel"], both online and off. Anyone who violates this code of conduct may be sanctioned or expelled from these spaces at the discretion of the RESPONSE TEAM.</p>
-<p>Some {{orgName}} spaces may have additional rules in place, which will be made clearly available to participants. Participants are responsible for knowing and abiding by these rules.</p>
-<p>Harassment includes:</p>
-<ul>
-<li>Offensive comments related to gender, gender identity and expression, sexual orientation, disability, mental illness, neuro(a)typicality, physical appearance, body size, age, race, or religion.</li>
-<li>Unwelcome comments regarding a person&rsquo;s lifestyle choices and practices, including those related to food, health, parenting, drugs, and employment.</li>
-<li>Deliberate misgendering or use of &lsquo;dead&rsquo; or rejected names.</li>
-<li>Gratuitous or off-topic sexual images or behaviour &nbsp;in spaces where they&rsquo;re not appropriate.</li>
-<li>Physical contact and simulated physical contact (eg, textual descriptions like &ldquo;*hug*&rdquo; or &ldquo;*backrub*&rdquo;) without consent or after a request to stop.</li>
-<li>Threats of violence.</li>
-<li>Incitement of violence towards any individual, including encouraging a person to commit suicide or to engage in self-harm.</li>
-<li>Deliberate intimidation.</li>
-<li>Stalking or following.</li>
-<li>Harassing photography or recording, including logging online activity for harassment purposes.</li>
-<li>Sustained disruption of discussion.</li>
-<li>Unwelcome sexual attention.</li>
-<li>Pattern of inappropriate social contact, such as requesting/assuming inappropriate levels of intimacy with others</li>
-<li>Continued one-on-one communication after requests to cease.</li>
-<li>Deliberate &ldquo;outing&rdquo; of any aspect of a person&rsquo;s identity without their consent except as necessary to protect vulnerable people from intentional abuse.</li>
-<li>Publication of non-harassing private communication.</li>
-</ul>
-<p>{{orgName}} prioritizes marginalized people&rsquo;s safety over privileged people&rsquo;s comfort. RESPONSE TEAM reserves the right not to act on complaints regarding:</p>
+    {{#if sexualImagery}}Sexual language and imagery is not appropriate for any {{memberType.[2]}} {{orgName}} forums or environments, including admins.{{/if}}
+    {{#if correctiveAction}}{{memberType.[1]}} violating these rules may be sanctioned or removed at the sole discretion of the admins.{{/if}}
+{{/if}}
+<p>
+{{#if (eq experienceType "safe")}}
+    Our full code of conduct can be found at: {{policyUrl}}
+{{/if}}
+{{#if (eq experienceType "harassment-free")}}
+    Our full anti-harassment policy can be found at: {{policyUrl}}
+{{/if}}
+{{#if (eq experienceType "positive")}}
+    Our full code of conduct can be found at: {{policyUrl}}
+{{/if}}
+</p>
+</div>
+
+<p></p>
+<h3>Code of Conduct, Suitable for handbooks, websites, training.</h3>
+<div class="rendered-coc">
+{{orgName}} is dedicated to providing a {{experienceType}} experience for everyone{{#if protectedGroups}}, regardless of {{protectedGroups}}{{/if}}.
+{{#if (eq experienceType "safety")}}
+    {{memberType.[1]}} must feel safe for the duration of their {{memberType.[4]}}.
+{{/if}}
+{{#if (eq experienceType "harassment-free")}}
+    <h4>Harassment</h4>
+    <p>{{orgName}} is dedicated to providing a harassment-free experience for everyone. We do not tolerate harassment of {{memberType.[3]}} in any form.</p>
+    <p>Harassment includes, but is not limited to:</p>
+    <ul>
+        <li>Offensive comments {{#if protectedGroups}} related to {{protectedGroups}}{{/if}}</li>
+        <li>Unwelcome comments regarding a person&rsquo;s lifestyle choices and practices, including those related to food, health, parenting, drugs, and employment.</li>
+        <li>Deliberate misgendering or use of &lsquo;dead&rsquo; or rejected names.</li>
+        <li>Gratuitous or off-topic sexual images or behaviour &nbsp;in spaces where they&rsquo;re not appropriate.</li>
+        <li>Physical contact and simulated physical contact (eg, textual descriptions like &ldquo;*hug*&rdquo; or &ldquo;*backrub*&rdquo;) without consent or after a request to stop.</li>
+        <li>Threats of violence.</li>
+        <li>Incitement of violence towards any individual, including encouraging a person to commit suicide or to engage in self-harm.</li>
+        <li>Deliberate intimidation.</li>
+        <li>Stalking or following.</li>
+        <li>Harassing photography or recording, including logging online activity for harassment purposes.</li>
+        <li>Sustained disruption of discussion.</li>
+        <li>Unwelcome sexual attention.</li>
+        <li>Pattern of inappropriate social contact, such as requesting/assuming inappropriate levels of intimacy with others</li>
+        <li>Continued one-on-one communication after requests to cease.</li>
+        <li>Deliberate &ldquo;outing&rdquo; of any aspect of a person&rsquo;s identity without their consent except as necessary to protect vulnerable people from intentional abuse.</li>
+        <li>Publication of non-harassing private communication.</li>
+    </ul>
+    <!--ul>
+        TODO: merge this
+        <li>Verbal comments that reinforce social structures of domination [related to gender, gender identity and expression, sexual orientation, disability, physical appearance, body size, race, age, religion, [your specific concern here].</li>
+        <li>Sexual images in public spaces</li>
+        <li>Deliberate intimidation, stalking, or following&nbsp;</li>
+        <li>Harassing photography or recording</li>
+        <li>Sustained disruption of talks or other events</li>
+        <li>Inappropriate physical contact</li>
+        <li>Unwelcome sexual attention</li>
+        <li>Advocating for, or encouraging, any of the above behaviour</li>
+    </ul-->
+{{/if}}
+{{#if (eq experienceType "positive")}}
+    {{memberType.[1]}} are responsible for maintaining the highest standard of ethics and conduct.
+{{/if}}
+
+{{#if mentionDignity}}
+    <h4>Dignity</h4>
+
+    {{memberType.[1]}} shall not dimininish the dignity or erase the identity of any person through language, rethorical device, or any other means.<br>
+    <p>Diminution includes</p>
+    <ul>
+        <li>Referring to any person using terminology which marginalizes them or their group.</li>
+        <li>Descriving any person, present or otherwise using language which is mocking or derisive of another group</li>
+    </ul>
+{{/if}}
+
+{{#if emotionalIntelligence}}
+    {{memberType.[1]}} shall endeavor to express their feelings in an emotionally-intelligent manner whenever possible. We each have agency over our thoughts, feelings, and perceptions.
+    Take the time to understand the difference between these and objective reality, especially when Communicating with other {{memberType.[3]}}.<br>
+    <p>Exercise Emotional Intelligence By</p>
+    <ul>
+        <li>Making "I feel" statements, especially in times of frustration or stress.</li>
+        <li>Describing internal perceptions and emotions rather than misrepresenting them as objective facts.</li>
+        <li>Make an effort to qualify statements as being from your perspective – "In my view", "I suspect", or make an "I feel" statement.</li>
+        <li>When you feel that you can't articulate your thoughts and feelings sufficiently, make clear and concise statements such as  "I need space", to indicate to other {{memberType.[3]}} you are anxious or overwhelmed.</li>
+        <li>When you see someone struggling, give them space. Make time later to affirm their feelings, and their humanity.</li>
+    </ul>
+{{/if}}
+
+{{#if (eq orgType "company")}}
+    {{#if sexualImagery}}Sexual language and imagery is not appropriate at {{orgName}}, including all company functions, meals, and after hours entertainment.{{/if}}
+    {{#if correctiveAction}}{{memberType.[1]}} violating these rules may be sanctioned or terminated without warning.{{/if}}
+{{/if}}
+{{#if (eq orgType "conference")}}
+    {{#if sexualImagery}}Sexual language and imagery is not appropriate for any conference venue, including talks.{{/if}}
+    {{#if correctiveAction}}{{memberType.[1]}} violating these rules may be sanctioned or removed at the sole discretion of the organizers.{{/if}}
+{{/if}}
+{{#if (eq orgType "online")}}
+    {{#if sexualImagery}}Sexual language and imagery is not appropriate for any {{memberType.[2]}} {{orgName}} forums or environments, including admins.{{/if}}
+    {{#if correctiveAction}}{{memberType.[1]}} violating these rules may be sanctioned or removed at the sole discretion of the admins.{{/if}}
+
+<!--p>This code of conduct applies to all {{orgName}} spaces, including [give a list of your spaces, eg "our mailing lists and IRC channel"], both online and off. Anyone who violates this code of conduct may be sanctioned or expelled from these spaces at the discretion of the RESPONSE TEAM.</p>
+<p>Some {{orgName}} spaces may have additional rules in place, which will be made clearly available to participants. Participants are responsible for knowing and abiding by these rules.</p-->
+
+{{/if}}
+
+{{#if prioritizeMarginalized}}
+<p>{{orgName}} prioritizes marginalized people&rsquo;s safety over privileged people&rsquo;s comfort. We reserve the right for the {{responseTeam}} to abtain from action on complaints regarding:</p>
 <ul>
 <li>&lsquo;Reverse&rsquo; -isms, including &lsquo;reverse racism,&rsquo; &lsquo;reverse sexism,&rsquo; and &lsquo;cisphobia&rsquo;</li>
 <li>Reasonable communication of boundaries, such as &ldquo;leave me alone,&rdquo; &ldquo;go away,&rdquo; or &ldquo;I&rsquo;m not discussing this with you.&rdquo;</li>
 <li>Communicating in a &lsquo;tone&rsquo; you don&rsquo;t find congenial</li>
 <li>Criticizing racist, sexist, cissexist, or otherwise oppressive behavior or assumptions</li>
 </ul>
-<h4><span id="Reporting" class="mw-headline">Reporting</span></h4>
-<p>If you are being harassed by a member of {{orgName}}, notice that someone else is being harassed, or have any other concerns, please contact the RESPONSE TEAM at [email address or other contact point]. If the person who is harassing you is on the team, they will recuse themselves from handling your incident. We will respond as promptly as we can.</p>
-<p>This code of conduct applies to {{orgName}} spaces, but if you are being harassed by a member of {{orgName}} outside our spaces, we still want to know about it. We will take all good-faith reports of harassment by {{orgName}} members, especially LEADERSHIP TEAM, seriously. This includes harassment outside our spaces and harassment that took place at any point in time. The abuse team reserves the right to exclude people from {{orgName}} based on their past behavior, including behavior outside {{orgName}} spaces and behavior towards people who are not in {{orgName}}.</p>
-<p>In order to protect volunteers from abuse and burnout, we reserve the right to reject any report we believe to have been made in bad faith. Reports intended to silence legitimate criticism may be deleted without response.</p>
-<p>We will respect confidentiality requests for the purpose of protecting victims of abuse. At our discretion, we may publicly name a person about whom we&rsquo;ve received harassment complaints, or privately warn third parties about them, if we believe that doing so will increase the safety of {{orgName}} members or the general public. We will not name harassment victims without their affirmative consent.</p>
-<h4><span id="Consequences" class="mw-headline">Consequences</span></h4>
+{{/if}}
+
+<!--h4><span id="Consequences" class="mw-headline">Consequences</span></h4>
 <p>Participants asked to stop any harassing behavior are expected to comply immediately.</p>
 <p>If a participant engages in harassing behavior, RESPONSE TEAM may take any action they deem appropriate, up to and including expulsion from all {{orgName}} spaces and identification of the participant as a harasser to other {{orgName}} members or the general public.</p>
-<div id="INCONTENT_WRAPPER">&nbsp;</div>
+<div id="INCONTENT_WRAPPER">&nbsp;</div-->
+
+{{#if reportingNoncompliance}}
+    {{#if (eq orgType "online")}}
+        <h4>Reporting</h4>
+        <p>If you are being harassed by a member of {{orgName}}, notice that someone else is being harassed, or have any other concerns, please contact the {{responseTeam}} at {{responseTeamContact}}. If the person who is harassing you is on the team, they will recuse themselves from handling your incident. We will respond as promptly as we can.</p>
+        <p>This code of conduct applies to {{orgName}} spaces, but if you are being harassed by a member of {{orgName}} outside our spaces, we still want to know about it. We will take all good-faith reports of harassment by {{orgName}} members, especially LEADERSHIP TEAM, seriously. This includes harassment outside our spaces and harassment that took place at any point in time. The abuse team reserves the right to exclude people from {{orgName}} based on their past behavior, including behavior outside {{orgName}} spaces and behavior towards people who are not in {{orgName}}.</p>
+        <p>In order to protect volunteers from abuse and burnout, we reserve the right to reject any report we believe to have been made in bad faith. Reports intended to silence legitimate criticism may be deleted without response.</p>
+        <p>We will respect confidentiality requests for the purpose of protecting victims of abuse. At our discretion, we may publicly name a person about whom we&rsquo;ve received harassment complaints, or privately warn third parties about them, if we believe that doing so will increase the safety of {{orgName}} members or the general public. We will not name harassment victims without their affirmative consent.</p>
+    {{/if}}
 {{/if}}
+
+</div>
+</div>
+</div>
+
+<!--
+
 
 
 {{#if (eq orgType "company")}}
-<p>Most conferences will want several different versions of an anti-harassment policy: a short, medium, and long version of the policy for public consumption, and an internal version spelling out implementation for use by the conference organizers and staff.</p>
-<h3><span id="Short_public_version" class="mw-headline">Short public version</span></h3>
-<p>This is a very short version that refers the reader to a longer version of the policy. Suitable for footers on announcement emails, web pages, news stories, etc.</p>
-<dl>
-<dd>$CONFERENCE is dedicated to a harassment-free conference experience for everyone. Our anti-harassment policy can be found at:</dd>
-</dl>
-<dl>
-<dd>[URL for full anti-harassment policy]</dd>
-</dl>
-<h3><span id="Medium_public_version" class="mw-headline">Medium public version</span></h3>
-<p>This is a statement of the organizers' principles and sets expectations for the tone and style of the conference. Suitable for the conference web site and longer announcements.</p>
-<dl>
-<dd>$CONFERENCE is dedicated to providing a harassment-free conference experience for everyone [, regardless of gender, gender identity and expression, sexual orientation, disability, physical appearance, body size, race, age or religion [insert any other specific concerns here]]. We do not tolerate harassment of conference participants in any form. [Sexual language and imagery is not appropriate for any conference venue, including talks.] Conference participants violating these rules may be sanctioned or expelled from the conference [without a refund] at the discretion of the conference organizers. Our anti-harassment policy can be found at:</dd>
-</dl>
-<dl>
-<dd>[URL for full anti-harassment policy]</dd>
-</dl>
-<h3><span id="Long_public_version" class="mw-headline">Long public version</span></h3>
-<p>This version focuses on specific instructions to the participants, with the goal of preventing harassment in the first place through education. Suitable for the conference web site and conference program material.</p>
-<dl>
-<dd>[Insert medium public version of policy here.]</dd>
-</dl>
-<dl>
-<dd>Harassment includes, but is not limited to:
-<ul>
-<li>Verbal comments that reinforce social structures of domination [related to gender, gender identity and expression, sexual orientation, disability, physical appearance, body size, race, age, religion, [your specific concern here].</li>
-<li>Sexual images in public spaces</li>
-<li>Deliberate intimidation, stalking, or following&nbsp;</li>
-<li>Harassing photography or recording</li>
-<li>Sustained disruption of talks or other events</li>
-<li>Inappropriate physical contact</li>
-<li>Unwelcome sexual attention</li>
-<li>Advocating for, or encouraging, any of the above behaviour</li>
-</ul>
-</dd>
-</dl>
 <dl>
 <dd></dd>
 </dl>
@@ -165,3 +301,7 @@ Organization Type:<br>
 
 
 </div>
+</div>
+</div>
+
+-->
